@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="utf-8">
+<head>
+<title>Document</title>
+<style>
+	#wrapper{
+		width:500px;
+		height:460px;
+		margin:auto;
+		overflow:hidden;
+	}
+	#header{
+		width:500px;
+		height:60px;
+		text-align:center;
+		font-size:20pt;
+		color:red;
+	}
+	#content{
+		width:3500px;
+		height:340px;
+	}
+	#footer{
+		width:500px;
+		height:60px;
+		text-align:center;
+		font-size:25pt;
+		color:#ff3333;
+	}
+</style>
+<script>
+var content;
+var footer;
+var targetX=0;
+var a=0.03;
+var imgArray = [
+	["img0.jpg",0,"슈렉일당들 포즈잡는 모습"],
+	["img1.jpg",-500, "슈렉 안면 사진"],
+	["img2.jpg",-1000,"슈렉이 드레곤 타는 모습"],
+	["img3.jpg",-1500,"분노한 백작"],
+	["img4.jpg",-2000,"공주엑게 짜증내는 슈렉"],
+	["img5.jpg",-2500,"변신전 공주모습"],
+	["img6.jpg",-3000, "팔랑귀 슈렉"]
+];
+
+function init(){
+	header=document.getElementById("header");
+	content=document.getElementById("content");
+	footer=document.getElementById("footer");
+	createImage();	
+	createMenu();
+	setPos();
+}
+
+function setPos(){
+	content.style.left = parseFloat(content.style.left) + a*(targetX - parseFloat(content.style.left))+"px";
+	//content.style.left = targetX+"px";
+	setTimeout("setPos()", 10);
+}
+
+function createImage(){
+	for(var i=0;i<imgArray.length;i++){
+		var img=document.createElement("img");
+		img.src="../images/"+imgArray[i][0];
+		img.id=i;
+		content.appendChild(img);
+	}
+}
+function createMenu(){
+	for(var i=0;i<imgArray.length;i++){
+		var span=document.createElement("span");
+		span.innerHTML="●";
+		span.id=i;
+		span.addEventListener("click", function(){
+			targetX=imgArray[this.id][1];
+			header.innerText=imgArray[this.id][2];
+		});
+		footer.appendChild(span);
+	}
+}
+</script>
+</head>
+<body onLoad="init()">
+ <div id="wrapper">
+	<div id="header"></div>	
+	<div id="content" style="position:relative;left:0px;"></div>
+	<div id="footer"></div>
+ </div>
+</body>
+</html>

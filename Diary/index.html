@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="utf-8">
+<head>
+<title>Document</title>
+<style>
+	#content{
+		width:720px;
+		height:700px;
+		margin:auto;
+	}
+</style>
+<script src="./DateBox.js"></script>
+<script>
+	var content;
+	var tag="";
+	var currentYY=2016;
+	var currentMM=2;
+	var dayArray=["일","월","화","수","목","금","토"];
+
+	function init(){
+		content=document.getElementById("content");
+		printDate();
+	}
+
+	function printDate(){
+		var table = document.createElement("table");
+		table.style.border="1px solid red";
+		table.style.width="100%";
+		
+		var d1 = new Date(currentYY,currentMM-1, 1);
+		var firstDay=d1.getDay();
+
+		var d2 = new Date(currentYY,currentMM,0);
+		var lastDate=d2.getDate();
+
+		var count=0;
+		var num=0;
+		var data="";
+
+		var tr = document.createElement("tr");
+		
+		for(var i=0; i<dayArray.length;i++){
+			var td = document.createElement("td");
+			td.innerHTML=dayArray[i];
+			tr.appendChild(td);
+			table.appendChild(tr);
+			
+		}
+
+		for(var a=1;a<=6;a++){
+			var tr = document.createElement("tr");
+			for(var i=1;i<=7;i++){
+				if(count >= firstDay && num<lastDate){
+					num++;
+					data=num;
+				}else{
+					data="";
+				}
+				var td = document.createElement("td");
+				var dateBox = new DateBox(data ,"안녕","#FFFFFF");
+				var box=dateBox.init();
+				td.appendChild(box);
+				tr.appendChild(td);
+				
+				count++;
+			}
+			table.appendChild(tr);	
+		}
+		content.appendChild(table);
+	}
+</script>
+</head>
+<body onLoad="init()">
+<div id="content"></div>
+</body>
+</html>

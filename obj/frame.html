@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="utf-8">
+<head>
+<title>Document</title>
+<script>
+	function init(){
+		var frame = new Frame();
+		frame.init();
+	}
+
+	var Frame = function(){
+		this.div;
+		this.width=200;
+		this.height=200;
+		this.x=400;
+		this.y=300;
+		this.targetW=0;
+		this.targetH=0;
+		this.targetR=20;
+		this.a=0.1;
+
+		this.init=function(){
+			var me=this;
+
+			this.div=document.createElement("div");
+			this.div.style.background="yellow";
+			this.div.style.border="1px solid blue";
+
+			this.div.style.width=this.width+"px";
+			this.div.style.height=this.height+"px";
+
+			this.div.style.position="absolute";
+			this.div.style.left=this.x+"px";
+			this.div.style.top=this.y+"px";
+
+			this.div.style.transform="rotate("+this.targetR+"deg)";
+
+			this.div.addEventListener("mouseover", function(){
+				//this.targetR=120;
+				alert(me.div.style.transform);
+			});
+
+			this.div.addEventListener("mouseout", function(){
+				
+			});
+
+			document.body.appendChild(this.div);
+			this.move();
+		}
+		//이벤트 부여하기
+
+
+		this.move=function(){
+			var me=this;
+			
+
+			//rotate effect!!
+			//this.a*(this.div.style.rotate);
+
+			//scale effect !!
+
+			setTimeout(function(){
+				me.move();
+			}, 50);
+		}
+	}
+
+</script>
+</head>
+<body onLoad="init()">
+
+</body>
+</html>

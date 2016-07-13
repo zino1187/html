@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="utf-8">
+<head>
+<title>Document</title>
+<script>
+/*사물 하나를 정의 !!*/
+var Arrow=function(posY,c,time){
+	this.div;
+	this.x=0;
+	this.y=posY;
+	this.color=c;
+	this.interval=time;
+
+	this.init=function(){
+		this.div=document.createElement("div");		
+		this.div.style.position="absolute";
+		this.div.style.top=this.y+"px";
+		this.div.innerText="→";
+		this.div.style.fontSize=50+"pt";
+		this.div.style.fontWeight="bold";
+		this.div.style.color=this.color;
+		document.body.appendChild(this.div);
+
+		this.move();
+	}
+	
+	
+	this.move=function(){
+		var me=this;
+		this.x+=10;
+		this.div.style.left=this.x+"px";
+
+		setTimeout(function(){
+			me.move();	
+		}, me.interval);
+	}
+	
+}
+
+var colorArray=["red", "orange", "yellow", "green", "blue", "navy", "purple"];
+
+function init(){
+	for(var i=0;i<100;i++){
+		var a = new Arrow(getRandom(500) , colorArray[getRandom(colorArray.length)], getRandom(100));
+		a.init();
+	}
+}
+
+function getRandom(max){
+	var r=Math.random();
+	var num=Math.floor(r*max);
+	return num;
+}
+</script>
+</head>
+<body onLoad="init()">
+
+</body>
+</html>

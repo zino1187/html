@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="utf-8">
+<head>
+<title>Document</title>
+<style>
+#content{
+	width:800px;
+	height:800px;
+	background:yellow;
+	margin:auto;
+}
+</style>
+<script>
+var content;
+
+var leftLimit=0;
+var rightLimit=0;
+var topLimit=0;
+var bottomLimit=0;
+
+function init(){
+	content=document.getElementById("content");
+
+	leftLimit=0;
+	rightLimit=parseInt(content.style.width);
+	topLimit=0;
+	bottomLimit=parseInt(content.style.height);
+
+	var ball = new Ball();
+	ball.init();
+}
+
+var Ball = function(){
+	this.span;
+	this.x=0; //x위치
+	this.y=50; //y위치
+	this.fontSize=30;
+	this.width=30;
+	this.height=30;
+	this.color="red";
+	this.stepX=10;
+	this.stepY=20;
+	
+	this.init=function(){
+		this.span=document.createElement("span");
+		this.span.style.position="relative";
+		this.span.style.left=this.x+"px";
+		this.span.style.top=this.y+"px";
+		this.span.style.width=this.width+"px";
+		this.span.style.height=this.height+"px";
+		
+		this.span.innerHTML="●";
+		this.span.style.fontSize=this.fontSize+"px";
+		this.span.style.color=this.color;
+
+		content.appendChild(this.span);
+
+		this.move();
+	}
+
+	this.move=function(){
+		var me=this;
+
+		this.x+=this.stepX;
+		this.y+=this.stepY;
+		
+		//충돌체크
+		this.stepY=((this.y>= (bottomLimit-this.height)) || (this.y<= topLimit))?  this.stepY*-1 : this.stepY;
+		this.stepX=(  (this.x<= leftLimit) ||  (this.x >= (rightLimit-this.width)) )?  this.stepX*-1 : this.stepX;
+
+
+		this.span.style.left=this.x+"px";
+		this.span.style.top=this.y+"px";
+
+		setTimeout(function(){
+			me.move();	
+		}, 10);
+	}
+}
+
+function hitTest(me, target) {
+ //두물체간 충돌 여부 판단 
+	 me_x= parseInt(me.style.left);
+	 me_y= parseInt(me.style.top);
+	 me_width=parseInt(me.style.width);
+	 me_height=parseInt(me.style.height);
+	 
+	 target_x= parseInt(target.style.left);
+	 target_y= parseInt(target.style.top);
+	 target_width=parseInt(target.style.width);
+	 target_height=parseInt(target.style.height);
+	 
+	 var result1=(me_x >= target_x) && (me_x <= (target_x+target_width));//나의 x좌표위치가 타겟의 x range 내에 있는지 판단 
+	 var result2=(me_x+me_width >= target_x) && (me_x+me_width <= (target_x+target_width));  //나의 가로폭이 타겟의 가로폭 내에 있는지 판단
+	 
+	 var result3=(me_y >= target_y) && (me_y <= (target_y+target_height));//나의 y좌표위치가 타겟의 세로폭 내에 있는지 판단
+	 var result4=(me_y+me_height >= target_y) && (me_y+me_height <= (target_y+target_height));//나의 y폭이 타겟의 세로폭 내에 있는지 판단
+	  
+	 return (result1 || result2) && (result3 || result4);
+}
+</script>
+</head>
+<body onLoad="init()">
+<div id="content" style="width:800px; height:800px"></div>
+</body>
+</html>

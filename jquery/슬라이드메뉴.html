@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="utf-8">
+<head>
+<title>Document</title>
+<style>
+#content{
+	width:100%;
+	height:200px;
+	border:1px solid red;
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>
+var content;
+var colorArray=["red", "orange", "yellow", "green", "blue", "navy", "purple"];
+
+$("document").ready(function(){
+	content=$("#content");
+
+	for(var i=0;i<colorArray.length;i++){
+		var div=document.createElement("div");
+		
+		$(div).css(
+			{
+				"width": 100+"px", 
+				"height": 50+"px", 
+				"background-color":colorArray[i], 
+				"position":"absolute", 
+				"left": i*100+"px"
+			}
+		);
+
+		$(div).mouseenter(function(){
+			$(this).animate({"height" : "300px"});
+		});
+
+		$(div).mouseleave(function(){
+			$(this).animate({"height" : "50px"});
+		});
+
+
+		console.log(i);
+		$("#content").append(div);
+	}
+
+});
+
+</script>
+</head>
+<body>
+<div id="content" style="position:relative;"></div>
+</body>
+</html>
